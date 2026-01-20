@@ -78,7 +78,6 @@ export type Database = {
         Row: {
           author: string
           created_at: string
-          finished_at: string | null
           id: string
           rating: number | null
           status: Database["public"]["Enums"]["book_status"]
@@ -88,7 +87,6 @@ export type Database = {
         Insert: {
           author: string
           created_at?: string
-          finished_at?: string | null
           id?: string
           rating?: number | null
           status?: Database["public"]["Enums"]["book_status"]
@@ -98,7 +96,6 @@ export type Database = {
         Update: {
           author?: string
           created_at?: string
-          finished_at?: string | null
           id?: string
           rating?: number | null
           status?: Database["public"]["Enums"]["book_status"]
