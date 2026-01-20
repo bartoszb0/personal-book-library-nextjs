@@ -1,6 +1,6 @@
 export default function DetailsLoadingSkeleton() {
   return (
-    <div className="bg-zinc-800 rounded-lg p-8 border w-[430px] max-w-4xl mx-auto border-zinc-700 animate-pulse">
+    <div className="bg-zinc-800 rounded-lg p-8  w-[90vw] md:w-[60vw] lg:w-[600px] mx-auto border-zinc-700 animate-pulse">
       {/* Title Skeleton */}
       <div className="h-10 bg-zinc-700 rounded w-3/4 mb-2"></div>
 
