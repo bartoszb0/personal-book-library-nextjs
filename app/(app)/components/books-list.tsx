@@ -1,5 +1,5 @@
-import { getBooks } from "@/actions/books";
 import { Tables } from "@/lib/types/supabase";
+import { getBooks } from "@/services/books";
 import BookCard from "./book-card";
 
 type Book = Tables<"books">;
