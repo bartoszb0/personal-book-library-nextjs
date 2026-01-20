@@ -1,6 +1,8 @@
 import { Tables } from "@/lib/types/supabase";
 import { getBookDetails } from "@/services/books";
 import RateBookModal from "../../components/rate-book-modal";
+import DeleteBookButton from "./delete-btn";
+import EditBookButton from "./edit-btn";
 
 type Book = Tables<"books">;
 
@@ -86,6 +88,12 @@ export default async function BookDetails({
         <div className="border-b border-zinc-700 pb-4">
           <h2 className="text-sm font-semibold text-zinc-400 mb-2">Added</h2>
           <p className="text-lg">{formatDate(book.created_at)}</p>
+        </div>
+
+        {/* Added Date */}
+        <div className="border-b border-zinc-700 pb-4 flex  gap-2">
+          <EditBookButton id={book.id} />
+          <DeleteBookButton id={book.id} />
         </div>
       </div>
     </div>
