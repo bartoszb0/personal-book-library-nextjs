@@ -1,5 +1,6 @@
 import { getRequiredUser } from "@/lib/getRequiredUser";
 import { createClient } from "@/lib/supabase/server";
+import { notFound } from "next/navigation";
 
 export async function getBooks() {
   const user = await getRequiredUser();
@@ -12,7 +13,6 @@ export async function getBooks() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Fetch error:", error);
     throw new Error(error.message);
   }
 
@@ -31,7 +31,10 @@ export async function getBookDetails(bookId: string) {
     .single();
 
   if (error) {
-    console.error("Fetch error:", error);
+    if (error.code === "PGRST116" || error.code === "22P02") {
+      return notFound();
+    }
+
     throw new Error(error.message);
   }
 
