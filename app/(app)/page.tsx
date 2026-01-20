@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Suspense } from "react";
 import BooksList from "./components/books-list";
 import BooksSkeleton from "./components/books-skeleton";
@@ -17,7 +18,9 @@ export default function Homepage({
           <StatusFilter />
           <BooksList searchParams={searchParams} />
         </Suspense>
-        <Button className="mt-10">+ Add new book</Button>
+        <Link href="/add-book">
+          <Button className="mt-10">+ Add new book</Button>
+        </Link>
       </div>
     </div>
   );
