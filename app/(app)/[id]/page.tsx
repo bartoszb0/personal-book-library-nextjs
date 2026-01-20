@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import BookDetails from "./components/book-details";
-import BookExtra from "./components/book-extra";
+import BookNotes from "./components/book-notes";
 import DetailsLoadingSkeleton from "./components/details-loading";
 
 export default function BookDetailsPage({
@@ -13,7 +13,7 @@ export default function BookDetailsPage({
       <Suspense fallback={<DetailsLoadingSkeleton />}>
         <BookDetails params={params} />
       </Suspense>
-      <BookExtra />
+      <BookNotes />
     </>
   );
 }
