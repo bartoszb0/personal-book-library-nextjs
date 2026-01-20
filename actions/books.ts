@@ -1,22 +1,40 @@
 "use server";
 
-import { getRequiredUser } from "@/lib/getRequiredUser";
+import { bookFormSchema, NewBookForm } from "@/lib/schemas/book";
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 
-export async function getBooks() {
-  const user = await getRequiredUser();
-  const supabase = await createClient();
+export default async function createNewBook(data: NewBookForm) {
+  // Validate once again
+  const validatedFields = bookFormSchema.safeParse(data);
 
-  const { data: books, error } = await supabase
-    .from("books")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Fetch error:", error);
-    throw new Error(error.message);
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      error: "Invalid form data",
+    };
   }
 
-  return books;
+  try {
+    const supabase = await createClient();
+
+    const { error } = await supabase.from("books").insert({
+      title: validatedFields.data.title,
+      author: validatedFields.data.author,
+      status: validatedFields.data.status,
+      rating: validatedFields.data.rating ?? null,
+    });
+
+    if (error) {
+      console.error("Supabase Error:", error);
+      return { success: false, error: error.message };
+    }
+
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unexpected error occurred";
+    return { success: false, error: errorMessage };
+  }
 }
